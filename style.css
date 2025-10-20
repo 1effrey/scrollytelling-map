@@ -1,0 +1,154 @@
+:root { --bg: #aa9877; }
+
+html, body { margin: 0; padding: 0; height: 100%; }
+body { font-family: 'Merriweather', serif; overflow-x: hidden; scroll-behavior: smooth; }
+
+/* Intro */
+.intro {
+  height: 100vh;
+  display: grid;
+  place-items: start center;
+  background: var(--bg);
+  position: relative;
+}
+#header {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  height: 10vh;
+  z-index: 10;
+  background: transparent;
+  color: #000;
+  text-align: center;
+  font-size: 22px;
+  line-height: 10vh;
+  transition: opacity .1s linear, transform .2s ease-out, filter .2s;
+}
+#header::after {
+  content:"";
+  display:block;
+  width:60%;
+  margin:10px auto 0;
+  height:2px;
+  background:#000;
+  opacity:.8;
+}
+
+#intro-text {
+  font-size: 22px;
+  max-width: 1000px;
+  text-align: center;
+  line-height: 1.4;
+  color: #222;
+  margin-top: 25vh;
+}
+
+/* Map Section: give enough scroll length for the sequence */
+.map-section { position: relative; height: 500vh; } /* longer = slower */
+
+/* Sticky viewport-filling stage */
+.map-sticky {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('beiPort.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;   /* fill center on mobile */
+  background-size: cover;               /* NO white borders */
+  z-index: 0;
+  overflow: hidden;
+  background-color: #000;               /* in case image loads late */
+}
+
+#svg1 {
+  width: 160px;       /* size of the icon on the map */
+  height: 160px;
+  background: url('overlay.png') center/contain no-repeat;
+  border: none;      /* remove circle outline */
+  border-radius: 0;
+  box-shadow: none;
+  opacity: 0;        /* JS will animate opacity */
+  transform: translate(-390%, -150%);
+}
+
+/* Hotspots (svg1, svg2): circular spotlight */
+.hotspot{
+  position:absolute;
+  width: 30vw; height: 30vw;
+  border: 3px solid rgba(255,255,255,.95);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  will-change: opacity, transform;
+  box-shadow:
+    0 0 0 200vmax rgba(0,0,0,.35) inset,
+    0 6px 24px rgba(0,0,0,.35);
+  transition: opacity .25s linear;
+}
+#svg2 {
+  position: absolute;
+  width: 80vw;
+  height: 80vw;
+  border: 3px solid rgba(255,255,255,.95);
+  border-radius: 50%;
+  opacity: 0;                         /* JS fades this in/out */
+  pointer-events: none;
+  transform: translate(-50%, -50%);   /* centered at cx/cy from JS */
+  will-change: opacity, transform;
+  box-shadow:
+    0 0 0 200vmax rgba(255, 0, 0, 0.35) inset,
+    0 6px 24px rgba(0,0,0,.35);
+  transition: opacity .25s linear;
+}
+
+#svg3.full-cover {
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  transform: none;
+  border: none; border-radius: 0;
+  box-shadow: none;
+  background: url('fuqed-up-bei.png.png') center/cover no-repeat; /* <-- your PNG */
+  opacity: 0;
+}
+
+/* Text cards */
+.text-box {
+  font-size: 18px;
+  position: absolute;
+  inset-inline-start: 20%;
+  max-width: 220px;
+  color: #fff;
+  background: rgba(0,0,0,.8);
+  padding: 16px 18px;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translate3d(-50%, 100vh, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Overlay decoration */
+.overlay {
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  opacity: 0;
+  transition: opacity .8s ease;
+  pointer-events: none;
+  z-index: 5;
+  transform: translate(780px, 10px) scale(.8);
+}
+
+/* Footer */
+.footer {
+  min-height: 60vh;
+  display: grid;
+  place-items: center;
+  background: #111;
+  color: #eee;
+  padding: 24px;
+}
